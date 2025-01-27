@@ -1,10 +1,10 @@
 {
-  "content": "Zamów obiadek ziomuś! :rocket_science:",
+  "content": "**Zamów obiadek ziomuś! ** :rocket_science:",
   "tts": false,
   "embeds": [
     {
       "title": "Menu obiadkowe",
-      "color": 2326507,
+      "color": 7419530,
       "fields": [
       ]
     }
