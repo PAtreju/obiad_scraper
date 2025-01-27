@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import os
 import json
+import schedule
 
 load_dotenv()
 DISCROD_URL = os.getenv('DISCROD_URL')
@@ -44,7 +45,8 @@ def dsc_post(DISCORD_URL, message_content):
     response = requests.post(DISCORD_URL, json=message_content)
     return response
 
-def send_message(fields):
+def send_message():
+    fields = get_menu(get_timestamp())
     check_for_last = False
 
     with open('message.json', 'r', encoding='utf-8') as file:
@@ -54,8 +56,6 @@ def send_message(fields):
         message['embeds'][0]['fields'] = fields[:25]
         dsc_post(DISCROD_URL, message)
 
-
-
         message['embeds'][0]['fields'] = fields[25:50 if len(fields) > 50 else len(fields)]
         message['content'] = ''
         message['embeds'][0]['title'] = ''
@@ -63,7 +63,6 @@ def send_message(fields):
         if message['embeds'][0]['fields'][-1] == {"name": "════════════════════════", "value": "\t", "inline": True} and message['embeds'][0]['fields'][-2] != {"name": "════════════════════════", "value": "\t", "inline": True}:
             del (message['embeds'][0]['fields'][-1])
             check_for_last = True
-
 
         dsc_post(DISCROD_URL, message)
 
@@ -87,6 +86,10 @@ def send_message(fields):
 
     return 0
 
+# Schedule the send_message function to run every day at 8 AM
+schedule.every().day.at("08:00").do(send_message)
+
 if __name__ == "__main__":
-    fields = get_menu(get_timestamp())
-    send_message(fields)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
