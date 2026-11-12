@@ -87,7 +87,7 @@ def send_message():
     return 0
 
 # Schedule the send_message function to run every day at 8 AM
-schedule.every().day.at("08:00").do(send_message)
+schedule.every().day.at("07:00").do(send_message)
 
 if __name__ == "__main__":
     while True:
