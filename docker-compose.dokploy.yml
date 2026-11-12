@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      DISCROD_URL: ${DISCROD_URL}
